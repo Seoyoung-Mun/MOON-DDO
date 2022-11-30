@@ -1,0 +1,81 @@
+<html>
+    <head>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+        <title>방명록만들기(jQuery로 변환)</title>
+        <style>
+            #table{ align-items: center;}
+        </style>
+        <script>
+            let cnt = 1; //enter함수 내부에서 쓸 cnt변수 선언
+
+            function enter(){
+                
+                let name = $('#name').val();
+                // let name = document.getElementById('name').value;
+                let content = $('#content').val();
+                // let content = document.getElementById('content').value;
+                let table = $('#table');
+                // let table = document.getElementById('table');
+                
+                //요소추가
+                // 1. ().html 로 실행하기
+                let line = document.createElement('tr'); 
+                let td1 = document.createElement('td');
+                $(td1).html(cnt);
+                // td1.innerText = cnt;
+                cnt += 1; // cnt = cnt + 1
+                let td2 = document.createElement('td');
+                $(td2).html(name);
+                // td2.innerText = name;
+                let td3 = document.createElement('td');
+                $(td3).html(content);
+                // td3.innerText = content;
+                let td4 = document.createElement('td');
+                let date = new Date();
+                let dateTd = date.getFullYear() + '-' + (date.getMonth()+1) + '-' + date.getDate();
+                $(td4).html(dateTd);
+                // td4.innerText = dateTd;
+
+                //맨 하위요소에 추가하기
+                $('table').append(line);
+                // table.appendChild(line);
+                $(line).append(td1);
+                // line.appendChild(td1);
+                $(line).append(td2);
+                // line.appendChild(td2);
+                $(line).append(td3);
+                // line.appendChild(td3);
+                $(line).append(td4);
+                // line.appendChild(td4);
+
+                //방명록 작성 후 input 초기화
+                // jquery로 변경
+                $('#name').val("");
+                $('#content').val("");
+                // document.getElementById('name').value = "";
+                // document.getElementById('content').value = "";
+            }
+        
+        </script>
+    </head>
+
+    <body>
+        <p>방명록 입니다.</p> <br />
+        <div>
+            <p>작 성 자 <input type = "text" id = "name"></p>
+            <p> 내 용 <input type = "text" id = "content"></p> <br />
+            <button type = "button" onclick = "enter();">작성</button>
+        </div>
+        <hr>
+
+        <table id = "table" border="1" cellspacing="1" cellpadding="10">
+            <tr>
+                <td>번호</td>
+                <td>작성자</td>
+                <td>내용</td>
+                <td>작성일</td>
+            </tr>
+            
+        </table>
+    </body>
+</html>

@@ -1,0 +1,74 @@
+<html>
+    <head>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+        <title>간단 계산기 만들기(jQuery와 switch)</title>
+
+        <script>
+            function calculat(){
+                let value1 = $('#value1').val();
+                // var value1 = document.getElementById("value1").value;
+                //id가 value1인 input태그에 입력된 값
+                let value2 = $('#value2').val();
+                // var value2 = document.getElementById("value2").value;
+                //id가 value2인 input태그에 입력된 값
+                let operator = $('#oper').val();
+                // var operator = document.getElementById("oper").value;
+                //id가 oper인 input태그에 입력된 값
+                let result = $('#val').val();
+                // var result = document.getElementById("val").value;
+                //id가 val인 input태그에 입력된 값
+
+                //parseInt는 문자열을 정수로 반환. 정수로만 반환하기 때문에 소수는 읽지못함.
+                //그럼 Number로 해도 되는지,
+                value1 = Number(value1);
+                // value1 = parseInt(value1);
+                value2 = Number(value2);
+                // value2 = parseInt(value2);
+
+                //switch문으로 바꾸기
+                // if (o == "+"){
+                //     result = value1 + value2;
+                // } else if(o == "-"){
+                //     result = value1 - value2;
+                // } else if( o == "/"){
+                //     result = value1 / value2;
+                // } else if( o == "*"){
+                //     result = value1 * value2;
+                // }
+                switch ( operator ) {
+                    case "+" :
+                        result = value1 + value2;
+                        break;
+                    case "-" :
+                        result = value1 - value2;
+                        break;
+                    case "*" : 
+                        result = value1 * value2;
+                        break;
+                    default : 
+                        result = value1 / value2;
+                        break;
+                }
+
+                $('#val').val(result);
+                // document.getElementById("val").value = result;
+                
+                //좌항에 우항 값을 넣는다.
+                //"이 작업을 왜 해야하는지" 질문
+                //id="val"인 input태그에 result값을 넣어야하기(출력해야하기) 때문에 '좌항에 우항값을 넣는다'
+            }
+            
+        
+        </script>
+    </head>
+    <body>
+        값1 : <input type="number" id="value1"> <br>
+        값2 : <input type="number" id="value2"> <br>
+        연산자 : <input type="text" id="oper"> <br>
+        결과 : <input type="number" id="val"> <br>
+
+        <button type="button" onclick="calculat();">계산하기</button>
+        <button type="button" onclick="reset();">초기화</button>
+        <br>
+    </body>
+</html>
