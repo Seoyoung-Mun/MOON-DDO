@@ -19,34 +19,47 @@
                 
                 //요소추가
                 // 1. ().html 로 실행하기
-                let line = document.createElement('tr'); 
-                let td1 = document.createElement('td');
-                $(td1).html(cnt);
-                // td1.innerText = cnt;
-                cnt += 1; // cnt = cnt + 1
-                let td2 = document.createElement('td');
-                $(td2).html(name);
-                // td2.innerText = name;
-                let td3 = document.createElement('td');
-                $(td3).html(content);
-                // td3.innerText = content;
-                let td4 = document.createElement('td');
+                // let line = document.createElement('tr'); 
+                // let td1 = document.createElement('td');
+                // $(td1).html(cnt);
+                // // td1.innerText = cnt;
+                // let td2 = document.createElement('td');
+                // $(td2).html(name);
+                // // td2.innerText = name;
+                // let td3 = document.createElement('td');
+                // $(td3).html(content);
+                // // td3.innerText = content;
+                // let td4 = document.createElement('td');
+                // $(td4).html(dateTd);
+                // // td4.innerText = dateTd;
+                
+                
+                // //맨 하위요소에 추가하기
+                // $('table').append(line);
+                // // table.appendChild(line);
+                // $(line).append(td1);
+                // // line.appendChild(td1);
+                // $(line).append(td2);
+                // // line.appendChild(td2);
+                // $(line).append(td3);
+                // // line.appendChild(td3);
+                // $(line).append(td4);
+                // // line.appendChild(td4);
+                
+                //간단하게 풀 수 있는 방법.
                 let date = new Date();
                 let dateTd = date.getFullYear() + '-' + (date.getMonth()+1) + '-' + date.getDate();
-                $(td4).html(dateTd);
-                // td4.innerText = dateTd;
+                let string = `
+                <tr>
+                    <td>${cnt}</td>
+                    <td>${name}</td>
+                    <td>${content}</td>
+                    <td>${dateTd}</td>
+                    </tr>
+                    `;
+                cnt += 1; // cnt = cnt + 1
+                $('table').append(string);
 
-                //맨 하위요소에 추가하기
-                $('table').append(line);
-                // table.appendChild(line);
-                $(line).append(td1);
-                // line.appendChild(td1);
-                $(line).append(td2);
-                // line.appendChild(td2);
-                $(line).append(td3);
-                // line.appendChild(td3);
-                $(line).append(td4);
-                // line.appendChild(td4);
 
                 //방명록 작성 후 input 초기화
                 // jquery로 변경
