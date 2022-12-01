@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jQuery로 이미지 바꾸기</title>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+        <script>
+
+            // function apple() {
+            //     $("img").attr("src", "../img/apple.jpeg");
+            // }
+            // function banana() {
+            //     $("img").attr("src", "../img/banana.jpeg");
+            // }
+            // function grape() {
+            //     $("img").attr("src", "../img/grape.jpeg");
+            // }
+            // function peach() {
+            //     $("img").attr("src", "../img/peach.jpeg");
+            // }
+
+            
+            function changeImg(fruits) {
+                // $("img").attr("src", "../img/"+fruits+".jpeg");
+                $("img").attr("src", `../img/${fruits}.jpeg`);
+            // img태그에서 이미지가 없을 경우 대체 이미지/알림 노출
+            // <img src = "" onerror="" >
+                $("img").attr("onerror", "alert('Image does not exist')");
+            }
+
+        </script>
+        <style>
+            img {
+                width: 300px;
+                height: 200px;
+                border: 5px solid orange;
+                border-radius: 20px;
+            }
+            div {
+                width: 350px;
+                height: 250px;
+                text-align: center;
+            }
+            .apple {
+                background-image: url("../img/apple.jpeg");
+            }
+        </style>
+</head>
+<body>
+    <div id="container">
+        <div class="apple"></div>
+        <img src="">
+        <br> <br>
+        <button type="button" onclick="changeImg('apple');">Apple</button>
+        <button type="button" onclick="changeImg('banana');">Banana</button>
+        <button type="button" onclick="changeImg('grape');">Grape</button>
+        <button type="button" onclick="changeImg('peach');">Peach</button>
+        <button type="button" onclick="changeImg('none');">None</button>
+    </div>
+</body>
+</html>
