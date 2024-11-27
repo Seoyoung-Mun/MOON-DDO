@@ -35,11 +35,11 @@
 
         function changeColor(){
             var now =  $("div").attr("class") ;
-            var i = colors.indexOf(now);
+            var i = colors.indexOf(now); // 현재 index찾기 
             if ( i == colors.length - 1 ) //마지막 index일때 
             $("div").switchClass(now,colors[0]);
             else $("div").switchClass(now, colors[i+1]);
-            console.log("컬러렝스", i);
+            // console.log("index", i);
         }
 
             /* 쉬운버전
