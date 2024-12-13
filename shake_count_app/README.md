@@ -7,6 +7,7 @@
 
 ## 사용한 패키지
 - [shake](https://pub.dev/packages/shake)
+- [velocity_x](https://pub.dev/packages/velocity_x)
 
 ## Getting Started
 

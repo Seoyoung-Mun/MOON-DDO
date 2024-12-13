@@ -1,21 +1,11 @@
 // option + enter : 필요한 패키지 import 단축키
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/src/services/predictive_back_event.dart';
 import 'package:shake/shake.dart';
+import 'package:velocity_x/velocity_x.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
 
   final String title;
 
@@ -65,8 +55,21 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text(
-              '흔들어서 카운트를 올려보세요.',
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                redBox(),
+                Column(
+                  children: [
+                    redBox(),
+                    const Text(
+                      '흔들어서 카운트를 올려보세요.',
+                    ).p(20),
+                    redBox(),
+                  ],
+                ),
+                redBox(),
+              ],
             ),
             Text(
               '$_counter',
@@ -79,13 +82,16 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
         onPressed: _incrementCounter,
         tooltip: 'Increment',
         child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      ),
     );
   }
 
+  //option + command + m : 메서드 추출 단축키를 사용하여 같은 위젯 추출
+  Widget redBox() => Container().box.green900.size(20, 20).make();
+
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    switch (state){
+    switch (state) {
       case AppLifecycleState.detached: // 앱이 종료되지 않았지만, 이벤트를 받지 않는 상태.
         break;
       case AppLifecycleState.resumed: // 앱이 사용자와 상호작용을 할 수 있는 상태.
@@ -97,7 +103,6 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
         break;
       case AppLifecycleState.paused: // 앱이 사용자와 상호작용을 하지 않는 상태.
         detector.stopListening();
-        break;
         break;
     }
   }
