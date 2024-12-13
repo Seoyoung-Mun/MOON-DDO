@@ -86,16 +86,16 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     switch (state){
-      case AppLifecycleState.detached:
+      case AppLifecycleState.detached: // 앱이 종료되지 않았지만, 이벤트를 받지 않는 상태.
         break;
-      case AppLifecycleState.resumed:
+      case AppLifecycleState.resumed: // 앱이 사용자와 상호작용을 할 수 있는 상태.
         detector.startListening();
         break;
-      case AppLifecycleState.inactive:
+      case AppLifecycleState.inactive: // 앱이 비활성화 상태.
         break;
-      case AppLifecycleState.hidden:
+      case AppLifecycleState.hidden: // 앱이 사용자에게 보이지 않는 상태.
         break;
-      case AppLifecycleState.paused:
+      case AppLifecycleState.paused: // 앱이 사용자와 상호작용을 하지 않는 상태.
         detector.stopListening();
         break;
         break;
