@@ -61,10 +61,20 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                 redBox(),
                 Column(
                   children: [
-                    redBox(),
-                    const Text(
-                      '흔들어서 카운트를 올려보세요.',
-                    ).p(20),
+                    redBox().box.padding(EdgeInsets.all(20)).color(Colors.blue).make(),
+                    '흔들어서 카운트를 올려보세요.'
+                        .text
+                        .size(20)
+                        .color(Colors.indigo)
+                        .bold
+                        .isIntrinsic
+                        .makeCentered()
+                        .box
+                        .withRounded(value: 50)
+                        .color(Colors.green)
+                        .height(150)
+                        .make()
+                        .pSymmetric(h: 20, v: 50),
                     redBox(),
                   ],
                 ),
