@@ -37,6 +37,7 @@ dependencies:
   cupertino_icons: ^1.0.8
   shake: ^2.2.0
   velocity_x: ^4.2.1
+  flutter_native_splash: ^2.4.3
 
 dev_dependencies:
   flutter_test:
