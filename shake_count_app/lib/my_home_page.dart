@@ -3,6 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:shake/shake.dart';
 import 'package:velocity_x/velocity_x.dart';
+import 'package:get/get.dart';
+
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
@@ -14,7 +16,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
-  int _counter = 0;
+  RxInt _counter = RxInt(0);
   late ShakeDetector detector;
 
   @override

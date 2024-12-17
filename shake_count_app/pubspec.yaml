@@ -38,6 +38,15 @@ dependencies:
   shake: ^2.2.0
   velocity_x: ^4.2.1
   flutter_native_splash: ^2.4.3
+  get: ^4.6.6
+
+  #대조 기본값: 7,664,863바이트
+
+  #Get 패키지 추가, 코드는 추가하지 않음: 7,664,893바이트
+
+  #Get 패키지 추가, Get Material App 사용: 7,682,684바이트
+
+  #Get 패키지 추가, RxInt만 사용: 7,665,540바이트
 
 dev_dependencies:
   flutter_test:
