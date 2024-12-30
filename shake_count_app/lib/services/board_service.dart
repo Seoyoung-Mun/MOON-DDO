@@ -1,0 +1,78 @@
+import 'package:supabase_flutter/supabase_flutter.dart';
+
+class BoardService {
+  final SupabaseClient _client;
+
+  BoardService(this._client);
+
+  // 게시글 생성
+  Future<void> createPost(String title, String body) async {
+    try {
+      final response = await _client.from('board').insert({
+        'title': title,
+        'body': body,
+        'created_at': DateTime.now().toIso8601String(),
+        // 'created_at': DateTime.now(),
+      });
+
+      // 응답이 null이거나 비어있는지 확인
+      if (response == null || response.isEmpty) {
+        throw Exception('게시글 생성에 실패했습니다: 응답이 비어있습니다.');
+      }
+    } catch (error) {
+      throw Exception('게시글 생성에 실패했습니다: $error');
+    }
+  }
+
+  // 게시글 목록 조회
+  Future<List<Map<String, dynamic>>> fetchPosts() async {
+    try {
+      final response = await _client
+          .from('board')
+          .select()
+          .order('created_at', ascending: false); // 내림차순
+
+      // 응답이 null이거나 비어있는지 확인
+      if (response == null || response.isEmpty) {
+        throw Exception('게시글 불러오기에 실패했습니다: 응답이 비어있습니다.');
+      }
+
+      return List<Map<String, dynamic>>.from(response);
+    } catch (error) {
+      throw Exception('게시글 불러오기에 실패했습니다: $error');
+    }
+  }
+
+  // 게시글 상세보기
+  Future<Map<String, dynamic>> fetchPost(int id) async {
+    try {
+      final response =
+          await _client.from('board').select().eq('id', id).single();
+
+      if (response == null) {
+        throw Exception('게시글을 불러오지 못했습니다.');
+      }
+
+      return response;
+    } catch (error) {
+      throw Exception('게시글 불러오기에 실패했습니다: $error');
+    }
+  }
+
+  // 게시글 수정
+  Future<void> updatePost(int id, String title, String body) async {
+    try {
+      final response = await _client.from('board').update({
+        'title': title,
+        'body': body,
+        // 'updated_at': DateTime.now().toIso8601String(),
+      }).eq('id', id);
+
+      if (response == null || response.isEmpty) {
+        throw Exception('게시글 수정에 실패했습니다: 응답이 비어있습니다.');
+      }
+    } catch (error) {
+      throw Exception('게시글 수정에 실패했습니다: $error');
+    }
+  }
+}
