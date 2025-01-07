@@ -14,9 +14,19 @@ void main() async {
   // .env 파일 로드
   await dotenv.load(fileName: ".env");
 
+  // 환경 변수에서 URL과 키를 가져오기
+  final supabaseUrl = dotenv.env['SBASE_URL'];
+  final supabaseAnonKey = dotenv.env['SBASE_KEY'];
+
+  // URL과 키가 null인지 확인하여 오류 방지
+  if (supabaseUrl == null || supabaseAnonKey == null) {
+    throw Exception('Supabase URL 또는 익명 키가 설정되지 않았습니다.');
+  }
+
+  // Supabase 초기화
   await Supabase.initialize(
-    url: dotenv.get("SBASE_URL"),
-    anonKey: dotenv.get("SBASE_URL"),
+    url: supabaseUrl,
+    anonKey: supabaseAnonKey,
   );
   runApp(const MyApp());
 }
