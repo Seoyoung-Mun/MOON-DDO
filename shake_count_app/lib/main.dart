@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:shake_count_app/router.dart';
 import 'package:shake_count_app/services/board_service.dart';
-import 'package:shake_count_app/view/board_create_page.dart';
+import 'package:shake_count_app/view/board_form_page.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'view/my_home_page.dart';
 

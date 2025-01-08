@@ -5,9 +5,24 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 class BoardDetailPage extends StatelessWidget {
   final int postId;
-  final BoardService _boardService = BoardService(Supabase.instance.client);
+  final BoardService _boardService = BoardService(
+      Supabase.instance.client); // 생성자로 받은 postId를 이용해 해당 게시글을 불러온다.
 
   BoardDetailPage({Key? key, required this.postId}) : super(key: key);
+
+  void _deletePost(BuildContext context) async {
+    try {
+      await _boardService.deletePost(postId);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('게시글이 삭제되었습니다.')),
+      );
+      context.go('/'); // 삭제 후 목록 페이지로 이동
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('게시글 삭제에 실패했습니다: $e')),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -77,8 +92,10 @@ class BoardDetailPage extends StatelessWidget {
                 label: Text('수정'),
               ),
               TextButton.icon(
-                onPressed: () {},
-                // onPressed: () => _deletePost(context),
+                // onPressed: (){},
+                onPressed: () {
+                  _deletePost(context);
+                },
                 icon: Icon(Icons.delete),
                 label: Text('삭제'),
               ),

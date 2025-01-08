@@ -3,51 +3,72 @@ import 'package:go_router/go_router.dart';
 import 'package:shake_count_app/services/board_service.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-class BoardCreatePage extends StatefulWidget {
+class BoardFormPage extends StatefulWidget {
   final int? postId; // null이면 생성 모드, 값이 있으면 수정 모드
 
-  BoardCreatePage({Key? key, this.postId}) : super(key: key);
+  BoardFormPage({Key? key, this.postId}) : super(key: key);
 
   @override
-  _BoardCreatePageState createState() => _BoardCreatePageState();
+  _BoardFormPageState createState() => _BoardFormPageState();
 }
 
-class _BoardCreatePageState extends State<BoardCreatePage> {
+class _BoardFormPageState extends State<BoardFormPage> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _bodyController = TextEditingController();
   late final BoardService _boardService;
-  bool _isLoading = false;
+  // bool _isLoading = false;
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   _boardService = BoardService(Supabase.instance.client);
-  //   if (widget.postId != null) {
-  //     _loadPostData();
-  //   }
-  // }
+  @override
+  void initState() {
+    super.initState();
+    _boardService = BoardService(Supabase.instance.client);
+    if (widget.postId != null) {
+      _loadPostData();
+    }
+  }
 
-  void _createPost() {
+  Future<void> _loadPostData() async {
     try {
-      if (_formKey.currentState!.validate()) {
-        String title = _titleController.text;
-        String body = _bodyController.text;
+      final post = await _boardService.fetchPost(widget.postId!);
+      _titleController.text = post['title'] ?? '';
+      _bodyController.text = post['body'] ?? '';
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('게시글을 불러오지 못했습니다: $e')),
+      );
+    }
+  }
 
-        _boardService = BoardService(Supabase.instance.client); // BoardService 인스턴스 생성 후 Supabase client 전달
-        _boardService.createPost(title, body);
-
-        // 입력 필드 초기화
-        _titleController.clear();
-        _bodyController.clear();
-
-        // 사용자에게 성공 메시지 표시
+  Future<void> _submit() async {
+    if (_formKey.currentState!.validate()) {
+      try {
+        if (widget.postId == null) {
+          // 생성 모드
+          await _boardService.createPost(
+            _titleController.text,
+            _bodyController.text,
+          );
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('게시글이 생성되었습니다.')),
+          );
+        } else {
+          // 수정 모드
+          await _boardService.updatePost(
+            widget.postId!,
+            _titleController.text,
+            _bodyController.text,
+          );
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('게시글이 수정되었습니다.')),
+          );
+        }
+        context.go('/');
+      } catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('게시글이 생성되었습니다.')),
+          SnackBar(content: Text('오류가 발생했습니다: $e')),
         );
       }
-    } catch (e) {
-      print(e);
     }
   }
 
@@ -55,7 +76,7 @@ class _BoardCreatePageState extends State<BoardCreatePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('게시글 작성'),
+        title: Text(widget.postId == null ? '게시글 작성' : '게시글 수정'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -84,12 +105,6 @@ class _BoardCreatePageState extends State<BoardCreatePage> {
                   border: OutlineInputBorder(),
                 ),
                 maxLines: 5,
-                // validator: (value) {
-                //   if (value == null || value.isEmpty) {
-                //     return '내용을 입력하세요.';
-                //   }
-                //   return null;
-                // },
               ),
               SizedBox(height: 16.0),
               Row(
@@ -102,8 +117,8 @@ class _BoardCreatePageState extends State<BoardCreatePage> {
                     child: Text('게시글 목록'),
                   ),
                   ElevatedButton(
-                    onPressed: _createPost,
-                    child: Text('Create'),
+                    onPressed: _submit,
+                    child: Text(widget.postId == null ? '생성' : '수정'),
                   ),
                 ],
               ),

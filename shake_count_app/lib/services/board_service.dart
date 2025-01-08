@@ -8,17 +8,11 @@ class BoardService {
   // 게시글 생성
   Future<void> createPost(String title, String body) async {
     try {
-      final response = await _client.from('board').insert({
+      await _client.from('board').insert({
         'title': title,
         'body': body,
         'created_at': DateTime.now().toIso8601String(),
-        // 'created_at': DateTime.now(),
       });
-
-      // 응답이 null이거나 비어있는지 확인
-      if (response == null || response.isEmpty) {
-        throw Exception('게시글 생성에 실패했습니다: 응답이 비어있습니다.');
-      }
     } catch (error) {
       throw Exception('게시글 생성에 실패했습니다: $error');
     }
@@ -65,14 +59,32 @@ class BoardService {
       final response = await _client.from('board').update({
         'title': title,
         'body': body,
-        // 'updated_at': DateTime.now().toIso8601String(),
+        'updated_at': DateTime.now().toIso8601String(),
       }).eq('id', id);
 
-      if (response == null || response.isEmpty) {
-        throw Exception('게시글 수정에 실패했습니다: 응답이 비어있습니다.');
+      // Supabase는 에러를 response.error로 반환하므로 확인
+      if (response.error != null) {
+        throw Exception('게시글 수정에 실패했습니다: ${response.error!.message}');
       }
     } catch (error) {
-      throw Exception('게시글 수정에 실패했습니다: $error');
+      throw Exception('게시글 수정 중 오류가 발생했습니다: $error');
+    }
+  }
+
+  // 게시글 삭제
+  Future<void> deletePost(int id) async {
+    try {
+      final response = await _client
+          .from('board')
+          .delete()
+          .eq('id', id); //.eq 메서드는 supabase의 필터링 메서드, 'id' 컬럼이 지정된 id 값과 동일한 행만 대상으로 함
+
+      // Supabase는 에러를 response.error로 반환하므로 확인
+      if (response.error != null) {
+        throw Exception('게시글 삭제에 실패했습니다: ${response.error!.message}');
+      }
+    } catch (error) {
+      throw Exception('게시글 삭제 중 오류가 발생했습니다: $error');
     }
   }
 }
