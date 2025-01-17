@@ -59,7 +59,7 @@ class BoardService {
       final response = await _client.from('board').update({
         'title': title,
         'body': body,
-        'updated_at': DateTime.now().toIso8601String(),
+        // 'updated_at': DateTime.now().toIso8601String(),
       }).eq('id', id);
 
       // Supabase는 에러를 response.error로 반환하므로 확인

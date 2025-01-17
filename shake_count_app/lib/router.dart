@@ -1,7 +1,8 @@
 import 'package:go_router/go_router.dart';
 import 'package:shake_count_app/view/board_form_page.dart';
 import 'package:shake_count_app/view/board_detail_page.dart';
-import 'package:shake_count_app/view/borad_list_page.dart';
+import 'package:shake_count_app/view/board_list_page.dart';
+import 'package:shake_count_app/view/img_board_list_page.dart';
 
 final GoRouter router = GoRouter(
   routes: [
@@ -26,6 +27,10 @@ final GoRouter router = GoRouter(
         final id = int.parse(state.pathParameters['id']!);
         return BoardDetailPage(postId: id);
       },
+    ),
+    GoRoute(
+      path: '/imagelist',
+      builder: (context, state) => ImgBoardListPage(),
     ),
   ],
 );
